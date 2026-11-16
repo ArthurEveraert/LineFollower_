@@ -6,12 +6,14 @@ minimale hard- & software + stappenplan dat aantoont dat 2 motoren onafhankelijk
 
 De H-brug (DRV8833, zie bill of materials) krijgt per motor twee ingangen: `IN1` en `IN2`. Door op de ene ingang PWM aan te bieden en de andere op 0 te zetten, draait de motor vooruit of achteruit. De snelheid is de PWM-duty cycle.
 
-| Arduino pin | functie | motor |
-|:-----------:|---------|-------|
+| GPIO (nummer in de code) | functie | motor |
+|:------------------------:|---------|-------|
 | 16 | `motorA_IN1` | motor A |
 | 17 | `motorA_IN2` | motor A |
 | 18 | `motorB_IN1` | motor B |
 | 19 | `motorB_IN2` | motor B |
+
+Deze test gebruikt GPIO-nummers. Het finale programma gebruikt de D-labels van de Arduino Nano ESP32 op de robot: linker motor op D3 en D5, rechter motor op D6 en D9 (zie [finaal](../../finaal/readme.md)). Controleer bij het aansluiten welke GPIO bij welk D-label hoort.
 
 Voeding en motoraansluitingen (`VM`, `GND`, `AOUT1/AOUT2`, `BOUT1/BOUT2`) staan nog niet in deze readme. Vul ze aan op basis van het schema van de robot of de datasheet van de driver.
 
