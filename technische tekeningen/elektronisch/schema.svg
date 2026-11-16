@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 800" width="1100" height="800" font-family="Arial, Helvetica, sans-serif">
+  <rect width="1100" height="800" fill="#ffffff"/>
+  <text x="40" y="45" font-size="22" font-weight="bold" fill="#000">Elektrisch schema LineFollower (bedradingsoverzicht)</text>
+  <text x="40" y="68" font-size="13" fill="#444">Pinnen volgens code/finaal/line_follower_analoog. Gestippeld = nog te bevestigen.</text>
+
+  <!-- Batterij -->
+  <g stroke="#000" stroke-width="2" fill="none">
+    <rect x="40" y="120" width="180" height="90"/>
+  </g>
+  <text x="130" y="145" font-size="14" text-anchor="middle" font-weight="bold">Batterij 2× 18650</text>
+  <text x="130" y="165" font-size="12" text-anchor="middle">in serie, 2S</text>
+  <text x="130" y="183" font-size="12" text-anchor="middle">7,4 V nominaal</text>
+  <text x="222" y="158" font-size="11" fill="#c00">+</text>
+
+  <!-- Zekering -->
+  <rect x="300" y="135" width="120" height="60" fill="none" stroke="#000" stroke-width="2"/>
+  <text x="360" y="162" font-size="13" text-anchor="middle">Zekering</text>
+  <text x="360" y="180" font-size="12" text-anchor="middle">0,5 A (5x20 mm)</text>
+  <line x1="220" y1="165" x2="300" y2="165" stroke="#000" stroke-width="2"/>
+
+  <!-- DRV8833 -->
+  <rect x="520" y="80" width="240" height="300" fill="#f7f7f7" stroke="#000" stroke-width="2"/>
+  <text x="640" y="104" font-size="15" text-anchor="middle" font-weight="bold">DRV8833 H-brug</text>
+  <text x="530" y="125" font-size="12">VM</text>
+  <text x="530" y="155" font-size="12">GND</text>
+  <text x="720" y="145" font-size="12" text-anchor="end">AOUT1</text>
+  <text x="720" y="175" font-size="12" text-anchor="end">AOUT2</text>
+  <text x="720" y="255" font-size="12" text-anchor="end">BOUT1</text>
+  <text x="720" y="285" font-size="12" text-anchor="end">BOUT2</text>
+  <text x="560" y="352" font-size="12" text-anchor="middle">AIN1</text>
+  <text x="600" y="352" font-size="12" text-anchor="middle">AIN2</text>
+  <text x="640" y="352" font-size="12" text-anchor="middle">BIN1</text>
+  <text x="680" y="352" font-size="12" text-anchor="middle">BIN2</text>
+  <!-- VM van batterij via zekering -->
+  <polyline points="420,165 470,165 470,120 520,120" fill="none" stroke="#c00" stroke-width="2"/>
+
+  <!-- Motoren -->
+  <circle cx="900" cy="130" r="45" fill="none" stroke="#000" stroke-width="2"/>
+  <text x="900" y="135" font-size="14" text-anchor="middle">M links</text>
+  <circle cx="900" cy="290" r="45" fill="none" stroke="#000" stroke-width="2"/>
+  <text x="900" y="295" font-size="14" text-anchor="middle">M rechts</text>
+  <line x1="760" y1="145" x2="855" y2="130" stroke="#000" stroke-width="2"/>
+  <line x1="760" y1="175" x2="855" y2="150" stroke="#000" stroke-width="2"/>
+  <line x1="760" y1="255" x2="855" y2="270" stroke="#000" stroke-width="2"/>
+  <line x1="760" y1="285" x2="855" y2="290" stroke="#000" stroke-width="2"/>
+
+  <!-- Arduino Nano ESP32 -->
+  <rect x="520" y="460" width="240" height="300" fill="#f7f7f7" stroke="#000" stroke-width="2"/>
+  <text x="640" y="484" font-size="15" text-anchor="middle" font-weight="bold" dy="-6">Arduino Nano ESP32</text>
+  <!-- bovenkant: motorpinnen -->
+  <text x="560" y="478" font-size="12" text-anchor="middle">D3</text>
+  <text x="600" y="478" font-size="12" text-anchor="middle">D5</text>
+  <text x="640" y="478" font-size="12" text-anchor="middle">D6</text>
+  <text x="680" y="478" font-size="12" text-anchor="middle">D9</text>
+  <!-- linkerkant: sensorpinnen -->
+  <text x="530" y="494" font-size="12">A0</text>
+  <text x="530" y="526" font-size="12">A1</text>
+  <text x="530" y="558" font-size="12">A2</text>
+  <text x="530" y="590" font-size="12">A3</text>
+  <text x="530" y="622" font-size="12">A4</text>
+  <text x="530" y="654" font-size="12">A5</text>
+  <text x="530" y="686" font-size="12">A6</text>
+  <text x="530" y="718" font-size="12">A7</text>
+  <!-- rechterkant -->
+  <text x="750" y="494" font-size="12" text-anchor="end">D2</text>
+  <text x="750" y="534" font-size="12" text-anchor="end">D4</text>
+  <text x="750" y="574" font-size="12" text-anchor="end">D10</text>
+
+  <!-- Motorverbindingen: Nano -> DRV8833 -->
+  <line x1="560" y1="380" x2="560" y2="460" stroke="#000" stroke-width="2"/>
+  <line x1="600" y1="380" x2="600" y2="460" stroke="#000" stroke-width="2"/>
+  <line x1="640" y1="380" x2="640" y2="460" stroke="#000" stroke-width="2"/>
+  <line x1="680" y1="380" x2="680" y2="460" stroke="#000" stroke-width="2"/>
+  <text x="566" y="420" font-size="11" fill="#444">links</text>
+  <text x="646" y="420" font-size="11" fill="#444">rechts</text>
+
+  <!-- Sensoren -->
+  <rect x="40" y="460" width="260" height="300" fill="#f7f7f7" stroke="#000" stroke-width="2"/>
+  <text x="170" y="484" font-size="15" text-anchor="middle" font-weight="bold">8× IR-lijnsensor</text>
+  <text x="50" y="496" font-size="12">Sensor 1 (links)</text>
+  <text x="50" y="526" font-size="12">Sensor 2</text>
+  <text x="50" y="558" font-size="12">Sensor 3</text>
+  <text x="50" y="590" font-size="12">Sensor 4</text>
+  <text x="50" y="622" font-size="12">Sensor 5</text>
+  <text x="50" y="654" font-size="12">Sensor 6</text>
+  <text x="50" y="686" font-size="12">Sensor 7</text>
+  <text x="50" y="718" font-size="12">Sensor 8 (rechts)</text>
+  <line x1="300" y1="490" x2="520" y2="490" stroke="#000" stroke-width="2"/>
+  <line x1="300" y1="522" x2="520" y2="522" stroke="#000" stroke-width="2"/>
+  <line x1="300" y1="554" x2="520" y2="554" stroke="#000" stroke-width="2"/>
+  <line x1="300" y1="586" x2="520" y2="586" stroke="#000" stroke-width="2"/>
+  <line x1="300" y1="618" x2="520" y2="618" stroke="#000" stroke-width="2"/>
+  <line x1="300" y1="650" x2="520" y2="650" stroke="#000" stroke-width="2"/>
+  <line x1="300" y1="682" x2="520" y2="682" stroke="#000" stroke-width="2"/>
+  <line x1="300" y1="714" x2="520" y2="714" stroke="#000" stroke-width="2"/>
+
+  <!-- IR-LED, knop, indicator -->
+  <rect x="880" y="472" width="200" height="36" fill="none" stroke="#000" stroke-width="2"/>
+  <text x="980" y="495" font-size="12" text-anchor="middle">IR-LEDs sensorprint (HIGH = aan)</text>
+  <line x1="760" y1="490" x2="880" y2="490" stroke="#000" stroke-width="2"/>
+  <rect x="880" y="512" width="200" height="36" fill="none" stroke="#000" stroke-width="2"/>
+  <text x="980" y="535" font-size="12" text-anchor="middle">Drukknop start/stop (naar GND)</text>
+  <line x1="760" y1="530" x2="880" y2="530" stroke="#000" stroke-width="2"/>
+  <rect x="880" y="552" width="200" height="36" fill="none" stroke="#000" stroke-width="2"/>
+  <text x="980" y="575" font-size="12" text-anchor="middle">LED "rijdt" (+ weerstand)</text>
+  <line x1="760" y1="570" x2="880" y2="570" stroke="#000" stroke-width="2"/>
+
+  <!-- Nog te bevestigen -->
+  <rect x="40" y="300" width="400" height="120" fill="none" stroke="#c00" stroke-width="2" stroke-dasharray="6,4"/>
+  <text x="240" y="325" font-size="14" text-anchor="middle" font-weight="bold" fill="#c00">Nog te bevestigen</text>
+  <text x="52" y="350" font-size="12" fill="#c00">Voeding Nano ESP32 (VIN of 5 V): de BOM heeft geen spanningsregelaar.</text>
+  <text x="52" y="372" font-size="12" fill="#c00">Logica-voeding DRV8833 (VCC) en nSLEEP: afhankelijk van de module.</text>
+  <text x="52" y="394" font-size="12" fill="#c00">Voeding van de IR-sensoren en de sensorprint.</text>
+  <text x="52" y="412" font-size="12" fill="#c00">GND: alle GND-punten verbinden met de batterij-min.</text>
+</svg>
