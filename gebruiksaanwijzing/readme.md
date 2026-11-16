@@ -11,54 +11,63 @@ Let op:
 - Laat de cellen niet onder ±3,0 V zakken. Rijdt de robot merkbaar trager, laad dan de batterijen op.
 - Gebruik altijd 2 gelijke cellen met dezelfde laadtoestand.
 - Gebruik nooit beschadigde of opgezwollen batterijen.
-- Werkt de robot niet terwijl de batterijen vol zijn, controleer dan de zekering (5x20 mm). Vervang ze alleen door een zekering met dezelfde waarde.
+- Werkt de robot niet terwijl de batterijen vol zijn, controleer dan de zekering (5x20 mm, 0,5 A). Vervang ze alleen door een zekering met dezelfde waarde.
 
-### draadloze communicatie
-#### verbinding maken
-De Arduino Nano ESP32 communiceert via Bluetooth Low Energy (BLE). De ESP32-S3 ondersteunt geen klassieke Bluetooth, dus de robot is niet zichtbaar in de gewone Bluetooth-instellingen van je smartphone of laptop.
+### verbinding maken
+De robot maakt zelf een WiFi-netwerk aan. Je hebt geen internet nodig.
 
-1. Installeer de app **Serial Bluetooth Terminal** (Android) of **LightBlue** (iOS).
-2. Schakel de robot in.
-3. Open de app → *Devices* → tabblad **Bluetooth LE** → *Scan*.
-4. Selecteer het toestel **`<naam robot>`** en maak verbinding.
-5. Typ een commando en verstuur het. Elk commando wordt afgesloten met een newline (`\n`).
+1. Schakel de robot in.
+2. Open de WiFi-instellingen op je smartphone of laptop.
+3. Kies het netwerk **LineFollower** en vul het wachtwoord **linefollower** in.
+4. Open de browser en ga naar **http://192.168.4.1**. De bedieningspagina verschijnt.
 
-#### commando's
-debug [on/off]: toont de huidige instellingen en sensorwaarden  
-start: robot begint de lijn te volgen  
-stop: robot stopt  
-set cycle [µs]: cyclustijd van de regellus  
-set power [0..255]: basissnelheid van de motoren  
-set diff [0..1]: hoeveel het binnenste wiel vertraagt in een bocht  
-set kp [0..]: proportionele factor van de PID-regelaar  
-set ki [0..]: integrerende factor van de PID-regelaar  
-set kd [0..]: differentiërende factor van de PID-regelaar  
-calibrate black: kalibreert de sensoren op zwart  
-calibrate white: kalibreert de sensoren op wit  
+Zolang je verbonden bent, blijft de pagina de status van de robot elke 300 ms verversen.
+
+### bediening op de webpagina
+- **Start** en **Stop**: laat de robot de lijn volgen of stopt hem. De robot start alleen als hij gekalibreerd is.
+- **Stap 1: kalibreer wit** en **Stap 2: kalibreer zwart**: zie de sectie kalibratie hieronder.
+- **Sensoren**: per sensor de referentie voor wit en zwart, de huidige ruwe waarde, de genormaliseerde waarde (0 = wit, 1000 = zwart) en of de sensor de lijn ziet.
+- **Instellingen**: schuifregelaars voor basissnelheid, maximale snelheid, gevoeligheid (drempel), witreferentie, zwartreferentie, KP, KI en KD. Elke wijziging wordt meteen opgeslagen.
+
+### drukknop
+Een drukknop op de robot start en stopt de robot. Druk één keer om te starten en nog eens om te stoppen. Dezelfde actie kan je ook op de webpagina doen.
+
+De drukknop is aangesloten op pin **D4** van de Arduino Nano ESP32.
+De indicator-LED (pin **D10**) brandt zolang de robot rijdt.
+
+Fysieke locatie van de knop op de robot: nog in te vullen.
 
 ### kalibratie
-De 8 IR-sensoren moeten gekalibreerd worden voor de ondergrond en de verlichting. Doe dit telkens op een nieuw parcours of bij andere lichtomstandigheden.
+De 8 IR-sensoren moeten gekalibreerd worden voor de ondergrond en de verlichting. Doe dit telkens op een nieuw parcours of bij andere lichtomstandigheden. De robot moet stilstaan tijdens het kalibreren.
 
-1. Maak verbinding met de robot.
-2. Plaats de robot zo dat alle 8 sensoren boven de zwarte lijn staan en stuur `calibrate black`.
-3. Plaats de robot zo dat alle 8 sensoren boven de witte ondergrond staan en stuur `calibrate white`.
-4. Controleer met `debug on` of wit en zwart duidelijk verschillende waarden geven.
+1. Maak verbinding met de robot en open de webpagina.
+2. Plaats de robot zo dat alle 8 sensoren boven het **witte** papier staan. Klik op **Stap 1: kalibreer wit**.
+3. Plaats de robot zo dat alle 8 sensoren boven de **zwarte** lijn staan. Klik op **Stap 2: kalibreer zwart**.
+4. De melding onder *Kalibratie* moet "Kalibratie OK. Je kunt starten." worden. Controleer in de tabel dat alle sensoren "OK" tonen.
 
-De kalibratiewaarden worden opgeslagen in het geheugen van de ESP32 en blijven behouden na uitschakelen.
+Als een sensor "kalibratie fout" toont, herhaal dan beide stappen.
 
-### settings
-De robot rijdt stabiel met volgende parameters:
+De kalibratiewaarden worden opgeslagen in het geheugen van de Arduino en blijven behouden na uitschakelen.
 
-| parameter | waarde |
-|-----------|--------|
-| cycle | `<invullen>` µs |
-| power | `<invullen>` |
-| diff | `<invullen>` |
-| kp | `<invullen>` |
-| ki | `<invullen>` |
-| kd | `<invullen>` |
+### standaardinstellingen
+De robot is ingesteld met de volgende waarden. Ze staan zo in de code en zijn de standaard. Op de robot kunnen andere waarden zijn opgeslagen, die je op de webpagina ziet.
 
-### start/stop button
-`<locatie van de knop op de robot>`
+| parameter | standaardwaarde | bereik |
+|-----------|-----------------|--------|
+| basissnelheid | 150 | 0..255 |
+| maximale snelheid | 230 | 0..255 |
+| gevoeligheid (drempel) | 500 | 0..1000 |
+| witreferentie (bijstelling) | 0 | -800..800 |
+| zwartreferentie (bijstelling) | 0 | -800..800 |
+| KP | 12 | 0..40 |
+| KI | 0 | 0..1 |
+| KD | 6 | 0..30 |
 
-Druk één keer op de knop om de robot te starten en nog eens om hem te stoppen. De robot kan ook gestart en gestopt worden met de commando's `start` en `stop`.
+De regelcyclus is vast op 5 ms (5000 µs) en niet instelbaar.
+
+### seriële monitor (optioneel)
+De robot stuurt elke 500 ms de sensorwaarden naar de seriële monitor op 115200 baud. Dit is handig om te zien wat de sensoren meten.
+
+### veiligheid
+- De robot stopt automatisch als de lijn 1,5 seconde niet gezien wordt.
+- Start de robot nooit met handen of voeten in de buurt van de wielen.
